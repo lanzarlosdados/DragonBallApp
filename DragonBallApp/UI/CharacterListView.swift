@@ -24,10 +24,19 @@ struct CharacterListView: View {
                    !errorMessage.isEmpty {
                     Text(errorMessage)
                 } else {
-                    List {
-                        ForEach(viewModel.characterList, id: \.id) { value in
-                            Text(value.name)
+                    NavigationStack {
+                        List {
+                            ForEach(viewModel.characterList, id: \.id) { value in
+                                Text(value.name)
+
+//                                NavigationLink{
+//                                    print("\(value.name)")
+//                                } label: {
+//                                    Text(value.name)
+//                                }
+                            }
                         }
+
                     }
                 }
             }
