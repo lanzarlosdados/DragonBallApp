@@ -8,17 +8,17 @@
 import Foundation
 
 protocol GetCharacterDetailsType {
-    func execute(id: Int) async throws(NetworkError) -> [Character]
+    func execute(id: Int) async throws(NetworkError) -> Character
 }
 
-class GetCharacterDetails {
+class GetCharacterDetails: GetCharacterDetailsType {
     let repository: GetCharacterDetailsRepositoryType
     
     init(repository: GetCharacterDetailsRepositoryType) {
         self.repository = repository
     }
     
-    func execute(id: Int) async throws(NetworkError) -> [Character] {
+    func execute(id: Int) async throws(NetworkError) -> Character {
         do {
             return try await repository.getCharacterDetails(id: id)
         } catch {

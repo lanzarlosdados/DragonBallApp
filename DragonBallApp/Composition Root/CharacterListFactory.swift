@@ -11,7 +11,10 @@ import Foundation
 class CharacterListFactory {
     
     static func create() -> CharacterListView {
-        return CharacterListView(viewModel: createViewModel())
+        return CharacterListView(
+            viewModel: createViewModel(),
+            charaterDetailsFactory: CharaterDetailsFactory()
+        )
     }
     
     private static func createViewModel() -> CharacterListViewModel {
@@ -24,7 +27,7 @@ class CharacterListFactory {
     
     private static func createRepository() -> CharacterListRepositoryType {
         return CharacterListRepository(
-            serviceLayer: ServiceLayerTypeManager.shared.create()
+            serviceLayer: ServiceLayerManager.shared.create()
         )
     }
 }

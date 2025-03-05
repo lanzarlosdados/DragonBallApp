@@ -9,9 +9,11 @@ import SwiftUI
 
 struct CharacterListView: View {
     @ObservedObject private var viewModel: CharacterListViewModel
+    private let charaterDetailsFactory: CharaterDetailsFactoryType
     
-    init(viewModel: CharacterListViewModel) {
+    init(viewModel: CharacterListViewModel,charaterDetailsFactory: CharaterDetailsFactory) {
         self.viewModel = viewModel
+        self.charaterDetailsFactory = charaterDetailsFactory
     }
     
     var body: some View {
@@ -27,13 +29,11 @@ struct CharacterListView: View {
                     NavigationStack {
                         List {
                             ForEach(viewModel.characterList, id: \.id) { value in
-                                Text(value.name)
-
-//                                NavigationLink{
-//                                    print("\(value.name)")
-//                                } label: {
-//                                    Text(value.name)
-//                                }
+                                NavigationLink{
+                                    charaterDetailsFactory.create(id: value.id)
+                                } label: {
+                                    Text(value.name)
+                                }
                             }
                         }
 

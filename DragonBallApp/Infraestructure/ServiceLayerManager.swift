@@ -8,8 +8,8 @@
 import Foundation
 
 @MainActor
-class ServiceLayerTypeManager {
-    static let shared = ServiceLayerTypeManager()
+class ServiceLayerManager {
+    static let shared = ServiceLayerManager()
     
     private init() {}
     

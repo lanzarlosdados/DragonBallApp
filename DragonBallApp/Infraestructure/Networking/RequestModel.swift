@@ -24,7 +24,7 @@ struct RequestModel  {
     }
 
     enum Endpoints : String   {
-        case characters = "/characters"
+        case characters = "/characters/"
     }
 
     enum URLBase : String{
