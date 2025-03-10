@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CharaterDetailsView: View {
-    @ObservedObject private var viewModel: CharaterDetailsViewModel
+    @ObservedObject private var viewModel: CharacterDetailsViewModel
     
-    init(viewModel: CharaterDetailsViewModel) {
+    init(viewModel: CharacterDetailsViewModel) {
         self.viewModel = viewModel
     }
     

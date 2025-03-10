@@ -9,39 +9,46 @@ import SwiftUI
 
 struct CharacterListView: View {
     @ObservedObject private var viewModel: CharacterListViewModel
-    private let charaterDetailsFactory: CharaterDetailsFactoryType
+    private let characterDetailsFactory: CharacterDetailsFactoryType
     
-    init(viewModel: CharacterListViewModel,charaterDetailsFactory: CharaterDetailsFactory) {
+    init(viewModel: CharacterListViewModel,characterDetailsFactory: CharacterDetailsFactory) {
         self.viewModel = viewModel
-        self.charaterDetailsFactory = charaterDetailsFactory
+        self.characterDetailsFactory = characterDetailsFactory
     }
     
     var body: some View {
-        VStack {
-            if viewModel.isLoading {
-                ProgressView()
-                    .progressViewStyle(.circular)
-            } else {
-                if let errorMessage =  viewModel.errorMessage,
-                   !errorMessage.isEmpty {
-                    Text(errorMessage)
-                } else {
-                    NavigationStack {
-                        List {
-                            ForEach(viewModel.characterList, id: \.id) { value in
-                                NavigationLink{
-                                    charaterDetailsFactory.create(id: value.id)
-                                } label: {
-                                    Text(value.name)
-                                }
-                            }
+        NavigationStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .center, spacing: 0) {
+                    Spacer(minLength: (UIScreen.main.bounds.width - 350) / 2)
+                    
+                    ForEach(viewModel.characterList) { character in
+                        GeometryReader { geometry in
+                            CharacterView(character: character)
+                                .frame(width: geometry.size.width-48, height: geometry.size.height)
                         }
-
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     }
+                    
+                    Spacer(minLength: (UIScreen.main.bounds.width - 350) / 2)
                 }
             }
-        }.onAppear {
+            .background(
+                Image("nameko")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+            )
+            .stateView(viewModel.state, retryAction: {
+                viewModel.onAppear()
+            })
+        }
+        .onAppear {
             viewModel.onAppear()
         }
     }
+}
+
+#Preview {
+    CharacterListFactory.create()
 }

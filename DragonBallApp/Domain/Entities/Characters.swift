@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Character: Codable {
+struct Character: Codable, Identifiable {
     let id: Int
     let name: String
     let ki: String
@@ -41,7 +41,6 @@ struct Character: Codable {
         transformations = try container.decodeIfPresent([Transformation].self, forKey: .transformations)
     }
 }
-
 struct CharacterResponse: Codable {
     let items: [Character]
 }

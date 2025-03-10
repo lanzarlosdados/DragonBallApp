@@ -13,7 +13,7 @@ class CharacterListFactory {
     static func create() -> CharacterListView {
         return CharacterListView(
             viewModel: createViewModel(),
-            charaterDetailsFactory: CharaterDetailsFactory()
+            characterDetailsFactory: CharacterDetailsFactory()
         )
     }
     

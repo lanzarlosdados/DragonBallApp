@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-class CharaterDetailsViewModel: ObservableObject {
+class CharacterDetailsViewModel: ObservableObject {
     private let getCharacterDetails: GetCharacterDetailsType
     @Published var character: Character? = nil
     @Published var isLoading: Bool = false

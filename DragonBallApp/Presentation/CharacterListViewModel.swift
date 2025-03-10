@@ -10,25 +10,31 @@ import Foundation
 class CharacterListViewModel: ObservableObject {
     private let getCharacterList: GetCharacterListType
     @Published var characterList: [Character] = []
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
+    @Published var state: ViewState = .loading
     
     init(getCharacterList: GetCharacterListType) {
         self.getCharacterList = getCharacterList
     }
     
     func onAppear() {
-        isLoading = true
+        state = .loading
         Task {
             defer {
-                isLoading = false            }
+                state = .loaded
+            }
             
             do throws(NetworkError) {
                 let characters = try await getCharacterList.execute()
                 self.characterList = characters
             } catch {
-                errorMessage = error.localizedDescription
+                state = .error(error.localizedDescription)
             }
         }
     }
+}
+
+enum ViewState {
+    case loading
+    case loaded
+    case error(String)
 }
